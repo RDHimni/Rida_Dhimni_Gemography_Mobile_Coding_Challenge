@@ -59,11 +59,12 @@
 
     <TextView
         android:id="@+id/repoOwnerName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="[repo owner name]"
         android:textColor="@color/blue"
         android:fontFamily="sans-serif"
+        app:layout_constraintWidth_percent=".6"
         app:layout_constraintHorizontal_bias="0"
         android:layout_marginStart="@dimen/_10sdp"
         android:textSize="@dimen/_13sdp"
@@ -78,9 +79,8 @@
         android:layout_height="@dimen/_18sdp"
         android:src="@drawable/ic_baseline_star_rate_24"
         app:layout_constraintBottom_toBottomOf="@+id/avatarIMv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".9"
-        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintEnd_toStartOf="@+id/numberOfStarsTv"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toEndOf="@+id/avatarIMv"
         app:layout_constraintTop_toTopOf="@+id/avatarIMv" />
 
@@ -93,10 +93,10 @@
         android:layout_marginEnd="@dimen/_10sdp"
         android:textColor="@color/black"
         android:textSize="@dimen/_15sdp"
-        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintBottom_toBottomOf="@+id/starMv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/starMv"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/starMv" />
 
     <View

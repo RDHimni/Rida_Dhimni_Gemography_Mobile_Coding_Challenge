@@ -34,6 +34,9 @@ public class TrendingReposAdapter extends RecyclerView.Adapter<TrendingReposAdap
         model_list = new ArrayList<>();
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////
+    /////////////******************setModel_list()***********************//////////////
+    ////////////////////////////////////////////////////////////////////////////////////
     public void setModel_list(ArrayList<Item> model_list) {
         this.model_list = model_list;
         notifyDataSetChanged();
@@ -65,17 +68,44 @@ public class TrendingReposAdapter extends RecyclerView.Adapter<TrendingReposAdap
         Glide.with(context).load(model_list.get(position).getOwner().getAvatarUrl()).into(holder.avatar);
 
         int NumberOfStar = model_list.get(position).getStargazersCount();
-        String NumOfStar ;
-        if (NumberOfStar > 1000) {
-            NumOfStar =  String.valueOf(NumberOfStar);
-            char a = NumOfStar.charAt(0);
-            char b = NumOfStar.charAt(1);
-            String nS = a+"."+b+"k";
+        String NumOfStarString = String.valueOf(NumberOfStar) ;
+
+
+        if (NumOfStarString.length() == 7){
+            char a = NumOfStarString.charAt(0);
+            char b = NumOfStarString.charAt(1);
+            String nS = a+"."+b+"M";
             holder.numberOfStar.setText(nS);
         }
         else {
-            holder.numberOfStar.setText(String.valueOf(NumberOfStar));
+            if (NumOfStarString.length() == 6){
+                String a = NumOfStarString.substring(0,3);
+                char b = NumOfStarString.charAt(3);
+                String nS = a+"."+b+"k";
+                holder.numberOfStar.setText(nS);
+            }
+            else {
+                if (NumOfStarString.length() == 5){
+                    String a = NumOfStarString.substring(0,2);
+                    char b = NumOfStarString.charAt(2);
+                    String nS = a+"."+b+"k";
+                    holder.numberOfStar.setText(nS);
+                }
+                else {
+                    if (NumOfStarString.length() == 4){
+                        char a = NumOfStarString.charAt(0);
+                        char b = NumOfStarString.charAt(1);
+                        String nS = a+"."+b+"k";
+                        holder.numberOfStar.setText(nS);
+                    }
+                    else {
+                        holder.numberOfStar.setText(String.valueOf(NumberOfStar));
+                    }
+
+                }
+            }
         }
+
 
     }
 

@@ -26,7 +26,6 @@ public class RetrofitModule {
 
         return new Retrofit.Builder()
                 .baseUrl("https://api.github.com/search/")
-               // .baseUrl("https://api.github.com/search/repositories?q=created:%3E2021-04-23&sort=stars&order=desc&page=-1&per_page=60")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build()
