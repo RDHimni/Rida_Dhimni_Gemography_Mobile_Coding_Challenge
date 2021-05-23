@@ -29,9 +29,9 @@ public class TrendingReposAdapter extends RecyclerView.Adapter<TrendingReposAdap
     private OnItemClickListener mListener;
 
 
-    public TrendingReposAdapter(Context context, ArrayList<Item> model_list) {
+    public TrendingReposAdapter(Context context) {
         this.context = context;
-        this.model_list = model_list;
+        model_list = new ArrayList<>();
     }
 
     public void setModel_list(ArrayList<Item> model_list) {

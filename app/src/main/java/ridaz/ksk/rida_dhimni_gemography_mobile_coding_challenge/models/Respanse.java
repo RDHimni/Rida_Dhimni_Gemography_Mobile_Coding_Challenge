@@ -41,4 +41,12 @@ public class Respanse {
         this.items = items;
     }
 
+    @Override
+    public String toString() {
+        return "Respanse{" +
+                "totalCount=" + totalCount +
+                ", incompleteResults=" + incompleteResults +
+                ", items=" + items +
+                '}';
+    }
 }

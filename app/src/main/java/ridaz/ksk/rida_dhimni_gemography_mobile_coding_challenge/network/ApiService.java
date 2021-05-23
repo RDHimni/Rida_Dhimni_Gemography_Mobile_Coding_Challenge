@@ -15,8 +15,7 @@ import ridaz.ksk.rida_dhimni_gemography_mobile_coding_challenge.models.Respanse;
 public interface ApiService {
 
     @GET("repositories")
-    Observable<Respanse> getReps(@Query("q") String date,@Query("sort") String  sort,@Query("order") String  order,@Query("page") String pageNumber);
+    Observable<Respanse> getReps(@Query("q") String date,@Query("sort") String  sort,@Query("order") String  order,@Query("page") int pageNumber,@Query("per_page") int per_page);
 
-    //https://api.github.com/search/repositories?q=created:%3E2017-10-22&sort=stars&order=desc&per_page=4&page=2
 
 }

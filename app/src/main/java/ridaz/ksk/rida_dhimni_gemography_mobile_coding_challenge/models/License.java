@@ -62,4 +62,14 @@ public class License {
         this.nodeId = nodeId;
     }
 
+    @Override
+    public String toString() {
+        return "License{" +
+                "key='" + key + '\'' +
+                ", name='" + name + '\'' +
+                ", spdxId='" + spdxId + '\'' +
+                ", url=" + url +
+                ", nodeId='" + nodeId + '\'' +
+                '}';
+    }
 }

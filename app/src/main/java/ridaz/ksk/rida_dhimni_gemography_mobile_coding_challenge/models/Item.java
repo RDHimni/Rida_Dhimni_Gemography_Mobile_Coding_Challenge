@@ -820,4 +820,83 @@ public class Item {
         this.score = score;
     }
 
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", nodeId='" + nodeId + '\'' +
+                ", name='" + name + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", _private=" + _private +
+                ", owner=" + owner +
+                ", htmlUrl='" + htmlUrl + '\'' +
+                ", description='" + description + '\'' +
+                ", fork=" + fork +
+                ", url='" + url + '\'' +
+                ", forksUrl='" + forksUrl + '\'' +
+                ", keysUrl='" + keysUrl + '\'' +
+                ", collaboratorsUrl='" + collaboratorsUrl + '\'' +
+                ", teamsUrl='" + teamsUrl + '\'' +
+                ", hooksUrl='" + hooksUrl + '\'' +
+                ", issueEventsUrl='" + issueEventsUrl + '\'' +
+                ", eventsUrl='" + eventsUrl + '\'' +
+                ", assigneesUrl='" + assigneesUrl + '\'' +
+                ", branchesUrl='" + branchesUrl + '\'' +
+                ", tagsUrl='" + tagsUrl + '\'' +
+                ", blobsUrl='" + blobsUrl + '\'' +
+                ", gitTagsUrl='" + gitTagsUrl + '\'' +
+                ", gitRefsUrl='" + gitRefsUrl + '\'' +
+                ", treesUrl='" + treesUrl + '\'' +
+                ", statusesUrl='" + statusesUrl + '\'' +
+                ", languagesUrl='" + languagesUrl + '\'' +
+                ", stargazersUrl='" + stargazersUrl + '\'' +
+                ", contributorsUrl='" + contributorsUrl + '\'' +
+                ", subscribersUrl='" + subscribersUrl + '\'' +
+                ", subscriptionUrl='" + subscriptionUrl + '\'' +
+                ", commitsUrl='" + commitsUrl + '\'' +
+                ", gitCommitsUrl='" + gitCommitsUrl + '\'' +
+                ", commentsUrl='" + commentsUrl + '\'' +
+                ", issueCommentUrl='" + issueCommentUrl + '\'' +
+                ", contentsUrl='" + contentsUrl + '\'' +
+                ", compareUrl='" + compareUrl + '\'' +
+                ", mergesUrl='" + mergesUrl + '\'' +
+                ", archiveUrl='" + archiveUrl + '\'' +
+                ", downloadsUrl='" + downloadsUrl + '\'' +
+                ", issuesUrl='" + issuesUrl + '\'' +
+                ", pullsUrl='" + pullsUrl + '\'' +
+                ", milestonesUrl='" + milestonesUrl + '\'' +
+                ", notificationsUrl='" + notificationsUrl + '\'' +
+                ", labelsUrl='" + labelsUrl + '\'' +
+                ", releasesUrl='" + releasesUrl + '\'' +
+                ", deploymentsUrl='" + deploymentsUrl + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", pushedAt='" + pushedAt + '\'' +
+                ", gitUrl='" + gitUrl + '\'' +
+                ", sshUrl='" + sshUrl + '\'' +
+                ", cloneUrl='" + cloneUrl + '\'' +
+                ", svnUrl='" + svnUrl + '\'' +
+                ", homepage='" + homepage + '\'' +
+                ", size=" + size +
+                ", stargazersCount=" + stargazersCount +
+                ", watchersCount=" + watchersCount +
+                ", language='" + language + '\'' +
+                ", hasIssues=" + hasIssues +
+                ", hasProjects=" + hasProjects +
+                ", hasDownloads=" + hasDownloads +
+                ", hasWiki=" + hasWiki +
+                ", hasPages=" + hasPages +
+                ", forksCount=" + forksCount +
+                ", mirrorUrl=" + mirrorUrl +
+                ", archived=" + archived +
+                ", disabled=" + disabled +
+                ", openIssuesCount=" + openIssuesCount +
+                ", license=" + license +
+                ", forks=" + forks +
+                ", openIssues=" + openIssues +
+                ", watchers=" + watchers +
+                ", defaultBranch='" + defaultBranch + '\'' +
+                ", score=" + score +
+                '}';
+    }
 }

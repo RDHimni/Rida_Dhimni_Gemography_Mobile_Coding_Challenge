@@ -28,9 +28,9 @@ public class TrendingViewModel extends ViewModel {
 
 
 
-    public void getReps(String date, String sort, String order, String pageNumber){
+    public void getReps(String date, String sort, String order, int pageNumber,int per_page){
 
-        repository.getReps(date,sort,order,pageNumber)
+        repository.getReps(date,sort,order,pageNumber,per_page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

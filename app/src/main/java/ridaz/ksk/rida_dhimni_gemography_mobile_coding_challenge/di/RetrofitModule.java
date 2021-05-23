@@ -20,13 +20,13 @@ import ridaz.ksk.rida_dhimni_gemography_mobile_coding_challenge.network.ApiServi
 @InstallIn(SingletonComponent.class)
 public class RetrofitModule {
 
-    //https://api.github.com/search/repositories?q=created:%3E2017-10-22&sort=stars&order=desc&per_page=4&page=2
     @Provides
     @Singleton
     public static ApiService provideServiceApi() {
 
         return new Retrofit.Builder()
                 .baseUrl("https://api.github.com/search/")
+               // .baseUrl("https://api.github.com/search/repositories?q=created:%3E2021-04-23&sort=stars&order=desc&page=-1&per_page=60")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build()

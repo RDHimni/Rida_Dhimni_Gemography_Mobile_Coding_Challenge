@@ -22,9 +22,9 @@ public class Repository {
     }
 
     //get Repos from Api
-    public Observable<Respanse> getReps(String date, String sort, String order, String pageNumber) {
+    public Observable<Respanse> getReps(String date, String sort, String order, int pageNumber, int per_page) {
 
-        return serviceApi.getReps(date, sort, order, pageNumber);
+        return serviceApi.getReps(date, sort, order, pageNumber, per_page);
 
     }
 }
