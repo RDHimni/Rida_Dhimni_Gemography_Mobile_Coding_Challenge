@@ -1,11 +1,10 @@
 package ridaz.ksk.rida_dhimni_gemography_mobile_coding_challenge.ui.trending;
 
-import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.os.Build;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,22 +14,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import ridaz.ksk.rida_dhimni_gemography_mobile_coding_challenge.R;
 import ridaz.ksk.rida_dhimni_gemography_mobile_coding_challenge.adapters.TrendingReposAdapter;
 import ridaz.ksk.rida_dhimni_gemography_mobile_coding_challenge.databinding.TrendingFragmentBinding;
+import ridaz.ksk.rida_dhimni_gemography_mobile_coding_challenge.internet.InternetService;
 import ridaz.ksk.rida_dhimni_gemography_mobile_coding_challenge.models.Item;
 import ridaz.ksk.rida_dhimni_gemography_mobile_coding_challenge.models.Respanse;
 
@@ -52,6 +52,9 @@ public class TrendingFragment extends Fragment {
     private Boolean isScrolling = false;
     private int currentItems, totalItems, scrollOutItems;
 
+    private boolean ConnectionAvailable;
+    private InternetService internetService;
+
     ////////////////////////////////////////////////////////////////////////////////////
     /////////////******************onCreateView()***********************//////////////
     ////////////////////////////////////////////////////////////////////////////////////
@@ -62,33 +65,12 @@ public class TrendingFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(TrendingViewModel.class);
         getActivity().setTitle("Trending Repos");
 
+        /**~~~~~~~~init~~~~~~~~*/
         init();
 
         return binding.getRoot();
     }
 
-
-    ////////////////////////////////////////////////////////////////////////////////////
-    /////////////******************liveData()***********************//////////////
-    ////////////////////////////////////////////////////////////////////////////////////
-    private void liveData() {
-        mViewModel.getResult().observe(getViewLifecycleOwner(), new Observer<Respanse>() {
-            @Override
-            public void onChanged(Respanse respanse) {
-
-                itemList.addAll(respanse.getItems());
-                trendingReposAdapter.setModel_list(itemList);
-
-
-                binding.swipe.setRefreshing(false);
-                binding.progressBarhor.setVisibility(View.INVISIBLE);
-                binding.progressBarCercle.setVisibility(View.INVISIBLE);
-
-
-
-            }
-        });
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////
     /////////////******************init()***********************//////////////
@@ -102,15 +84,16 @@ public class TrendingFragment extends Fragment {
         binding.trendingReposList.setAdapter(trendingReposAdapter);
         binding.trendingReposList.setLayoutManager(layoutManager);
 
-        /**~~~~LiveData~~~~~~*/
-        liveData();
+        /**checkNetwork*/
+        checkNetwork();
 
         /**~~~~getLast_30_day_date~~~~~~*/
         getLast_30_day_date();
 
-        /**~~~~getData First Data~~~~~~*/
-        binding.progressBarCercle.setVisibility(View.VISIBLE);
-        getData();
+
+        /**~~~~LiveData~~~~~~*/
+        liveData();
+
 
         /**~~~~getData OnSwipe~~~~~~*/
         Onswipe();
@@ -118,7 +101,62 @@ public class TrendingFragment extends Fragment {
         /**~~~~getData OnScrolList~~~~~~*/
         OnScroledList(layoutManager);
 
+        /**~~~~firstEnter~~~~~~*/
+        firstEnter();
+
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    /////////////******************firstEnter()***********************//////////////
+    ////////////////////////////////////////////////////////////////////////////////////
+    private void firstEnter() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!ConnectionAvailable) {
+                    binding.constraintLayoutFailNetwork.setVisibility(View.VISIBLE);
+                }
+                else {
+                    /**~~~~getData First Data~~~~~~*/
+                    binding.progressBarCercle.setVisibility(View.VISIBLE);
+                    getData();
+                }
+            }
+        }, 2000);
+
+
+        binding.constraintLayoutFailNetwork.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                internetService.execute();
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!ConnectionAvailable) {
+                            binding.constraintLayoutFailNetwork.setVisibility(View.VISIBLE);
+                            Snackbar.make(binding.constraintLayoutFailNetwork,
+                                    "Oops !! You are not connected to the internet",
+                                    Snackbar.LENGTH_SHORT)
+                                    .setBackgroundTint(Color.parseColor("#7A0101"))
+                                    .show();
+
+                        } else {
+                            binding.constraintLayoutFailNetwork.setVisibility(View.INVISIBLE);
+
+                            /**~~~~getData First Data~~~~~~*/
+                            binding.progressBarCercle.setVisibility(View.VISIBLE);
+                            getData();                        }
+                    }
+                }, 1000);
+
+
+            }
+        });
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////
     /////////////******************getLast_30_day_date()***********************//////////////
     ////////////////////////////////////////////////////////////////////////////////////
@@ -194,6 +232,44 @@ public class TrendingFragment extends Fragment {
                 itemList.addAll(list);
               /**~~~~getData On Swipe~~~~~~*/
                 getData();
+
+            }
+        });
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    /////////////******************checkNetwork()***********************//////////////
+    ////////////////////////////////////////////////////////////////////////////////////
+    private void checkNetwork() {
+        internetService = InternetService.getInstance();
+        internetService.init(this.getContext());
+        internetService.execute();
+
+        internetService.getNetworkState().observe(this.getActivity(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                ConnectionAvailable = aBoolean;
+            }
+        });
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    /////////////******************liveData()***********************//////////////
+    ////////////////////////////////////////////////////////////////////////////////////
+    private void liveData() {
+        mViewModel.getResult().observe(getViewLifecycleOwner(), new Observer<Respanse>() {
+            @Override
+            public void onChanged(Respanse respanse) {
+
+                itemList.addAll(respanse.getItems());
+                trendingReposAdapter.setModel_list(itemList);
+
+
+                binding.swipe.setRefreshing(false);
+                binding.progressBarhor.setVisibility(View.INVISIBLE);
+                binding.progressBarCercle.setVisibility(View.INVISIBLE);
+
+
 
             }
         });
